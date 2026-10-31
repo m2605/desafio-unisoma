@@ -1,6 +1,6 @@
 DESAFIO UNISOMA 2026 - EQUIPE 14 - ENTURME
-Willian Massaki Otani, Ester Santos da Silva, Mário Vinícius Souza de Carvalho,
-Maria Magdalena Kcala Alvaro
+Willian Massaki Otani, Ester Santos da Silva, Maria Magdalena Kcala Alvaro,
+Mário Vinícius Souza de Carvalho
 
 01_Executavel
    Enturme.exe ............ aplicativo (Windows 10/11, não precisa instalar nada).
@@ -29,4 +29,5 @@ Maria Magdalena Kcala Alvaro
      - solucao_decomposicao/ -> formulação alternativa (decomposição), para comparação
 
 05_Apresentacao
-   Apresentacao_Enturme.pdf
+   Apresentacao_Enturme.pdf ........ apresentação (6 slides)
+   versao_completa_opcional\ ......... versão com 9 slides
