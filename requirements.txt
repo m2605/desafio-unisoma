@@ -1,0 +1,12 @@
+﻿# Python 3.12.9
+pulp==2.9.0
+highspy==1.9.0
+openpyxl==3.1.5
+reportlab==4.2.5
+matplotlib==3.9.4
+pillow
+# desenvolvimento / build
+pyinstaller==6.13.0
+pytest==8.3.4
+pypdf==5.1.0
+numpy==2.1.3

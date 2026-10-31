@@ -1,0 +1,25 @@
+# Ambiente
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Build
+build/
+dist/
+*.spec
+build.log
+
+# Arquivos fornecidos pela organização (não versionar)
+Validador.exe
+Desafio_UniSoma.pdf
+Modelo Conceitual Desafio 2026.pdf
+Template_Apresentacao_Equipes_Desafio_UniSoma_2026.pptx
+instancias-*/
+
+# Saídas de testes
+saida_testes/
+saida_cenarios/
+*_validacao.xlsx
+*_validador.txt
+~$*.xlsx
