@@ -6,7 +6,8 @@
      "linkedin": "https://www.linkedin.com/in/willian-massaki-otani-67538427b/"},
     {"nome": "Ester Santos da Silva", "foto": "fotos/ester.png",
      "linkedin": "https://www.linkedin.com/in/ester-silvaa/"},
-    {"nome": "Mário Vinícius Souza de Carvalho", "foto": "fotos/mario.png"},
-    {"nome": "Maria Magdalena Kcala Alvaro", "foto": "fotos/maria.png"}
+    {"nome": "Maria Magdalena Kcala Alvaro", "foto": "fotos/maria.png",
+     "linkedin": "https://www.linkedin.com/in/maria-magdalena-kcala-álvaro-aa7810309"},
+    {"nome": "Mário Vinícius Souza de Carvalho", "foto": "fotos/mario.png"}
   ]
 }

@@ -94,7 +94,9 @@ CARTOES_EQUIPE = [(126, 127, 128, 129, 130, 131, 132, 133), (134, 135, 136, 137,
 
 
 def _link(run_ou_shape, url):
-    """Adiciona hyperlink a um run de texto ou a uma imagem."""
+    """Adiciona hyperlink a um run de texto ou a uma imagem (acentos codificados na URL)."""
+    from urllib.parse import quote
+    url = quote(url, safe=":/?=&%#")
     if hasattr(run_ou_shape, "hyperlink"):
         run_ou_shape.hyperlink.address = url
     else:
@@ -131,6 +133,8 @@ def preencher_equipe(slide, membros):
                                      circ.width - 2 * borda, circ.height - 2 * borda)
         if m.get("linkedin"):
             url = m["linkedin"].rstrip("/")
+            if not url.startswith("http"):
+                url = "https://" + url
             usuario = url.split("/in/")[-1]
             card = shape(slide, ids[0])
             icone_lado = Cm(0.55)
