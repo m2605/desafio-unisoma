@@ -12,7 +12,7 @@ import sys
 import threading
 import traceback
 import tkinter as tk
-from tkinter import filedialog, messagebox, ttk
+from tkinter import filedialog, font as tkfont, messagebox, ttk
 
 from ensalamento_mono import __version__
 from ensalamento_mono.etl import ALERTA, CORRIGIDO, ERRO, ORDEM_TURNOS
@@ -103,8 +103,11 @@ class App(tk.Tk):
                      background=VERDE, foreground="white")
         st.map("Rodar.TButton", background=[("disabled", "#BFBFBF"), ("active", "#5E9439")])
         st.configure("TButton", padding=(10, 6))
-        st.configure("Treeview", rowheight=24, font=("Segoe UI", 9))
-        st.configure("Treeview.Heading", font=("Segoe UI Semibold", 9), background="#DDEBF7")
+        altura_fonte = tkfont.Font(root=self, family="Segoe UI", size=9).metrics("linespace")
+        st.configure("Treeview", rowheight=max(32, int(altura_fonte * 1.85)),
+                     font=("Segoe UI", 9))
+        st.configure("Treeview.Heading", font=("Segoe UI Semibold", 9), background="#DDEBF7",
+                     padding=(6, 6))
         st.configure("TNotebook", background=FUNDO)
         st.configure("TNotebook.Tab", padding=(14, 6), font=("Segoe UI", 10))
         st.configure("green.Horizontal.TProgressbar", background=VERDE)
@@ -191,7 +194,10 @@ class App(tk.Tk):
             self.tv_turmas.heading(c, text=t)
             self.tv_turmas.column(c, width=w, anchor=anc, stretch=(c == "barra"))
         self.tv_turmas.tag_configure("turno", background="#DDEBF7", font=("Segoe UI Semibold", 9))
-        self.tv_turmas.pack(fill="both", expand=True)
+        sb_t = ttk.Scrollbar(aba_t, orient="vertical", command=self.tv_turmas.yview)
+        self.tv_turmas.configure(yscrollcommand=sb_t.set)
+        self.tv_turmas.pack(side="left", fill="both", expand=True)
+        sb_t.pack(side="right", fill="y")
 
         aba_i = ttk.Frame(nb, padding=8)
         nb.add(aba_i, text="Inconsistências")
