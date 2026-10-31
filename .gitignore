@@ -23,3 +23,8 @@ saida_cenarios/
 *_validacao.xlsx
 *_validador.txt
 ~$*.xlsx
+
+# PDF do colega fica versionado em solucao_monolitica/docs
+desafiounissomamodelagem.pdf
+build_mono.log
+__pycache__/
