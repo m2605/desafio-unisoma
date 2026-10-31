@@ -13,7 +13,8 @@ import sys
 from pptx import Presentation
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from gerar_slides import AQUI, escrever, imagem_em_caixa, remover, shape  # noqa: E402
+from gerar_slides import (AQUI, escrever, imagem_em_caixa, preencher_equipe, remover,  # noqa: E402
+                          shape)
 
 
 def titulo(sh, cinza: str, vermelho: str):
@@ -43,27 +44,10 @@ def main():
 
     # ---- capa
     escrever(shape(sl[1], 117), sol)
-    escrever(shape(sl[1], 118), f"Equipe {num}  ·  {nomes}")
+    escrever(shape(sl[1], 118), f"Equipe {num}")
 
-    # ---- equipe
-    cartoes = [(126, 127, 128, 129, 130, 131, 132, 133), (134, 135, 136, 137, 138, 139, 140, 141),
-               (142, 143, 144, 145, 146, 147, 148, 149), (150, 151, 152, 153, 154, 155, 156, 157)]
-    for k, ids in enumerate(cartoes):
-        if k < len(eq["membros"]):
-            m = eq["membros"][k]
-            escrever(shape(sl[2], ids[4]), m["nome"])
-            if m.get("curso"):
-                escrever(shape(sl[2], ids[5]), m["curso"])
-            else:
-                remover(shape(sl[2], ids[5]))
-            if m.get("papel"):
-                escrever(shape(sl[2], ids[7]), m["papel"])
-            else:
-                remover(shape(sl[2], ids[6]))
-                remover(shape(sl[2], ids[7]))
-        else:
-            for i in ids:
-                remover(shape(sl[2], i))
+    # ---- equipe (fotos e LinkedIn)
+    preencher_equipe(sl[2], eq["membros"])
 
     # ---- 1) O problema
     escrever(shape(sl[3], 171), "Todo semestre, centenas de jovens são distribuídos em turmas "
@@ -96,8 +80,8 @@ def main():
              "e decisões transparentes.")
 
     # ---- obrigado
-    escrever(shape(sl[9], 333), f"Equipe {num}  ·  {sol}")
-    escrever(shape(sl[9], 334), nomes)
+    remover(shape(sl[9], 333))   # encerramento: só "Obrigado"
+    remover(shape(sl[9], 334))
 
     # mantém: capa(1), equipe(2), problema(3), como resolvemos(6), impacto(8), obrigado(9)
     manter = {1, 2, 3, 6, 8, 9}
