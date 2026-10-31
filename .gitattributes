@@ -1,0 +1,9 @@
+# Arquivos binários: nunca converter quebras de linha
+*.pdf  binary
+*.xlsx binary
+*.pptx binary
+*.png  binary
+*.ico  binary
+*.ttf  binary
+*.exe  binary
+*.zip  binary
