@@ -1,4 +1,4 @@
-"""Gera docs/Manual_do_Usuario.pdf."""
+"""Gera docs/Manual_do_Usuario_Enturme.pdf (interface Enturme ABC)."""
 from __future__ import annotations
 
 import os
@@ -20,7 +20,7 @@ pdfmetrics.registerFont(TTFont("DejaVu", fonte))
 pdfmetrics.registerFont(TTFont("DejaVu-Bold", fonte.replace("DejaVuSans.ttf", "DejaVuSans-Bold.ttf")))
 pdfmetrics.registerFontFamily("DejaVu", normal="DejaVu", bold="DejaVu-Bold", italic="DejaVu",
                               boldItalic="DejaVu-Bold")
-AZUL = colors.HexColor("#1F4E79")
+AZUL = colors.HexColor("#2A4598")
 
 T = ParagraphStyle("t", fontName="DejaVu-Bold", fontSize=22, textColor=AZUL, leading=27)
 ST = ParagraphStyle("st", fontName="DejaVu", fontSize=11, textColor=colors.HexColor("#595959"),
@@ -60,10 +60,10 @@ def passo(num, titulo, texto, imagem=None):
 
 
 def main():
-    s = [Spacer(1, 1.2 * cm), Paragraph("Manual do Usuário — Enturme", T),
+    s = [Spacer(1, 1.2 * cm), Paragraph("Manual do Usuário — Enturme ABC", T),
          Paragraph("Ensalamento automático de turmas da ABC Aprendiz", ST),
-         Spacer(1, 0.5 * cm), img("enturme_4_resultado.png", 13), Spacer(1, 0.5 * cm),
-         Paragraph("O Enturme monta automaticamente as turmas da Manhã e da Tarde a partir da "
+         Spacer(1, 0.5 * cm), img("app_3_turmas.png", 13), Spacer(1, 0.5 * cm),
+         Paragraph("O Enturme ABC monta automaticamente as turmas da Manhã e da Tarde a partir da "
                    "planilha de matriculados. Ele usa um <b>modelo matemático de otimização</b> para "
                    "garantir turmas do mesmo tamanho (diferença máxima de 1 aluno), proporção de "
                    "meninos e meninas equilibrada e respeito às vagas — em poucos segundos.", N),
@@ -105,25 +105,36 @@ def main():
 
     s.append(PageBreak())
     s.append(Paragraph("3. Passo a passo", H))
-    s.append(passo(1, "Abra o Enturme e escolha a planilha", "Dê dois cliques em "
-                   "<b>Enturme.exe</b>. Clique em <b>Buscar arquivo</b> ou simplesmente <b>arraste a "
-                   "planilha</b> (.xlsx) para dentro da janela. Dica: arrastar a planilha para cima "
-                   "do arquivo Enturme.exe também funciona.", "enturme_1_inicial.png"))
-    s.append(passo(2, "Confirme o processamento", "Aparece “Planilha selecionada” com o nome do "
-                   "arquivo. Se escolheu o arquivo errado, clique em <b>Escolher outro arquivo</b>. "
-                   "Estando certo, clique em <b>Confirmar processamento da planilha de alunos</b>.",
-                   "enturme_2_selecionado.png"))
-    s.append(passo(3, "Aguarde alguns segundos", "O modelo de otimização monta as turmas. "
-                   "Normalmente leva de 1 a 2 segundos.", "enturme_3_processando.png"))
-    s.append(passo(4, "Veja o resultado", "A tela mostra o <b>percentual de alunos alocados</b>, a "
-                   "<b>proporção de meninos e meninas por turno</b> e um aviso com o número de "
-                   "inconsistências encontradas nos dados. Use <b>Baixar a planilha das turmas</b> e "
-                   "<b>Baixar Relatório em PDF</b> para salvar cópias onde quiser, ou "
-                   "<b>Processar outra planilha</b> para recomeçar.", "enturme_4_resultado.png"))
+    s.append(passo(1, "Abra o Enturme ABC", "Dê dois cliques em <b>Enturme.exe</b>. A janela abre "
+                   "vazia, pronta para receber a planilha. O botão <b>Como usar</b>, no canto "
+                   "superior direito, mostra um resumo destas instruções.", "app_1_inicial.png"))
+    s.append(passo(2, "Escolha a planilha", "Em <b>1. Selecione a planilha (.xlsx)</b>, clique em "
+                   "<b>Procurar...</b> e escolha a planilha de matriculados. O caminho do arquivo "
+                   "aparece no campo e o botão <b>Rodar ensalamento</b> fica verde. Dica: arrastar a "
+                   "planilha para cima do arquivo Enturme.exe abre o programa com ela já "
+                   "selecionada.", "app_2_selecionado.png"))
+    s.append(passo(3, "Rode o ensalamento", "Feche a planilha no Excel e clique em <b>▶ Rodar "
+                   "ensalamento</b>. O modelo de otimização monta as turmas em 1 a 2 segundos. Ao "
+                   "terminar, uma mensagem confirma quantos alunos foram ensalados e avisa se algum "
+                   "ficou de fora. Os cartões mostram: matriculados, ensalados, não ensalados, "
+                   "turmas, erros e alertas.", None))
+    s.append(passo(4, "Confira as turmas", "A aba <b>Turmas</b> mostra cada turno e cada turma: "
+                   "alunos, vagas, ocupação, meninos, meninas, % de meninas e uma barra com a "
+                   "composição da turma.", "app_3_turmas.png"))
+    s.append(passo(5, "Confira as inconsistências", "A aba <b>Inconsistências</b> lista os "
+                   "problemas encontrados nos dados, com a linha do Excel e o tratamento dado. Use "
+                   "<b>Mostrar</b> para ver só Erros, Alertas ou Corrigidos. Dê dois cliques em uma "
+                   "linha para ler a descrição completa.", "app_4_inconsistencias.png"))
+    s.append(passo(6, "Detalhes da otimização (opcional)", "A aba <b>Otimização</b> mostra o "
+                   "solver usado, o status (ótimo provado), o tempo e o valor de cada parte do "
+                   "objetivo. É útil para a coordenação conferir a qualidade da solução.",
+                   "app_5_otimizacao.png"))
     s.append(Paragraph("<b>Onde ficam os arquivos?</b> O resultado é gravado na própria planilha "
-                       "escolhida (abas <b>Ensalamento</b> e <b>Inconsistências</b>). Além disso, uma "
-                       "cópia da planilha e o relatório PDF ficam na pasta <b>Enturme_Arquivos</b>, "
-                       "criada ao lado da planilha.", DICA))
+                       "escolhida (abas <b>Ensalamento</b> e <b>Inconsistências</b>), e o "
+                       "<b>Relatório Resumo da Distribuição</b> em PDF é criado na mesma pasta, com o "
+                       "nome <b>&lt;planilha&gt;_relatorio.pdf</b>. Use os botões <b>Abrir "
+                       "planilha</b>, <b>Abrir relatório PDF</b> e <b>Abrir pasta</b>, no rodapé da "
+                       "janela, para abri-los.", DICA))
 
     s.append(PageBreak())
     s.append(Paragraph("4. Entendendo o resultado", H))
@@ -134,8 +145,8 @@ def main():
                               "tarde continua as letras (TARDE - C, TARDE - D, …)."],
         ["Aba “Inconsistências”", "Tipo, aba, linha do Excel, nome, campo, valor encontrado e o que "
                                   "foi feito / o que fazer."],
-        ["Enturme_Arquivos / &lt;planilha&gt;_relatorio.pdf",
-         "Relatório Resumo: totais, tabela por turma (ocupação, meninos, "
+        ["&lt;planilha&gt;_relatorio.pdf (mesma pasta)",
+         "Relatório Resumo da Distribuição: totais, tabela por turma (ocupação, meninos, "
                                      "meninas, % e desvio), gráfico e lista de inconsistências."],
     ], [4.2 * cm, 12.3 * cm]))
     s.append(Spacer(1, 6))
@@ -173,10 +184,11 @@ def main():
     s.append(Paragraph("6. Perguntas frequentes", H))
     for p, r in [
         ("Apareceu “a planilha parece estar aberta no Excel”.",
-         "Feche o arquivo no Excel e clique em Confirmar processamento de novo."),
-        ("O que significa “Notamos X inconsistências”?",
-         "É o total de itens da aba Inconsistências: erros (alunos não alocados), alertas (para "
-         "conferir) e correções automáticas. Abra a aba para ver cada um."),
+         "Feche o arquivo no Excel e clique em Rodar ensalamento de novo."),
+        ("O que significam os cartões “erros” e “alertas”?",
+         "São as contagens da aba Inconsistências: erros (alunos não ensalados ou dados que "
+         "impedem o ensalamento) e alertas (para conferir). As correções automáticas também "
+         "aparecem na aba. Abra a aba para ver cada item."),
         ("Posso rodar de novo na mesma planilha?",
          "Sim. As abas Ensalamento e Inconsistências são substituídas pela nova execução."),
         ("Rodei duas vezes e as turmas mudaram?",
@@ -193,7 +205,7 @@ def main():
 
     s.append(Paragraph("7. Como funciona (para curiosos)", H))
     s.append(Paragraph(
-        "O Enturme resolve um modelo de <b>Programação Linear Inteira Mista</b> com o solver "
+        "O Enturme ABC resolve um modelo de <b>Programação Linear Inteira Mista</b> com o solver "
         "HiGHS, considerando os dois turnos ao mesmo tempo. Para cada aluno e cada turma, o modelo "
         "decide se o aluno vai para aquela turma, respeitando: o turno do aluno, as vagas de cada "
         "turma e uma diferença de no máximo 1 aluno entre turmas do mesmo turno. Entre todas as "
@@ -209,13 +221,13 @@ def main():
         canvas.saveState()
         canvas.setFont("DejaVu", 7.5)
         canvas.setFillColor(colors.HexColor("#8C8C8C"))
-        canvas.drawString(1.8 * cm, 1 * cm, "Ensalamento ABC Aprendiz · Manual do Usuário")
+        canvas.drawString(1.8 * cm, 1 * cm, "Enturme ABC · Manual do Usuário · Equipe 14")
         canvas.drawRightString(A4[0] - 1.8 * cm, 1 * cm, f"Página {doc.page}")
         canvas.restoreState()
 
     SimpleDocTemplate(destino, pagesize=A4, leftMargin=1.8 * cm, rightMargin=1.8 * cm,
                       topMargin=1.5 * cm, bottomMargin=1.6 * cm,
-                      title="Manual do Usuário - Ensalamento ABC Aprendiz").build(
+                      title="Manual do Usuário - Enturme ABC").build(
         s, onFirstPage=rodape, onLaterPages=rodape)
     print("Gerado:", destino)
 

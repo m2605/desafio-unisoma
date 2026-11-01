@@ -1,11 +1,11 @@
-DESAFIO UNISOMA 2026 - EQUIPE 14 - ENTURME
+DESAFIO UNISOMA 2026 - EQUIPE 14 - ENTURME ABC
 Willian Massaki Otani, Ester Santos da Silva, Maria Magdalena Kcala Alvaro,
 Mário Vinícius Souza de Carvalho
 
 01_Executavel
-   Enturme.exe ............ aplicativo (Windows 10/11, não precisa instalar nada).
-                             Clique em "Buscar arquivo" ou arraste a planilha .xlsx,
-                             depois "Confirmar processamento da planilha de alunos".
+   Enturme.exe ............ aplicativo Enturme ABC (Windows 10/11, não precisa
+                             instalar nada). Clique em "Procurar...", escolha a
+                             planilha .xlsx e clique em "Rodar ensalamento".
                              Se aparecer "O Windows protegeu o computador":
                              Mais informações -> Executar assim mesmo.
 
@@ -24,8 +24,8 @@ Mário Vinícius Souza de Carvalho
        (PuLP + solver HiGHS)
      - solucao_monolitica/ensalamento_mono/etl.py              -> leitura e inconsistências
      - solucao_monolitica/ensalamento_mono/relatorio.py        -> relatório PDF
-     - solucao_monolitica/app_enturme.py                       -> interface Enturme
-     - solucao_monolitica/scripts/build_enturme.ps1            -> gera o Enturme.exe
+     - solucao_monolitica/app.py                               -> interface Enturme ABC
+     - solucao_monolitica/scripts/build_exe.ps1                -> gera o Enturme.exe
      - README.md                                               -> como rodar e gerar o .exe
 
 05_Apresentacao
