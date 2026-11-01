@@ -82,8 +82,8 @@ def gerar_pdf(res, caminho: str) -> str:
     kpi_l = ParagraphStyle("kl", parent=ss["Normal"], fontSize=7.5, alignment=TA_CENTER,
                            textColor=colors.HexColor("#595959"))
 
-    story = [Paragraph("Relatório Resumo do Ensalamento", h1),
-             Paragraph(f"ABC Aprendiz &nbsp;·&nbsp; Arquivo: <b>{os.path.basename(cen.caminho)}</b>"
+    story = [Paragraph("Relatório Resumo da Distribuição", h1),
+             Paragraph(f"Enturme ABC &nbsp;·&nbsp; ABC Aprendiz &nbsp;·&nbsp; Arquivo: <b>{os.path.basename(cen.caminho)}</b>"
                        f" &nbsp;·&nbsp; Gerado em {datetime.now():%d/%m/%Y %H:%M}", normal),
              Spacer(1, 8)]
 
@@ -171,6 +171,6 @@ def gerar_pdf(res, caminho: str) -> str:
 
     doc = SimpleDocTemplate(caminho, pagesize=A4, leftMargin=1.5 * cm, rightMargin=1.5 * cm,
                             topMargin=1.3 * cm, bottomMargin=1.3 * cm,
-                            title="Relatório Resumo do Ensalamento", author="Ensalamento ABC Aprendiz")
+                            title="Relatório Resumo da Distribuição - Enturme ABC", author="Enturme ABC - Equipe 14")
     doc.build(story)
     return caminho

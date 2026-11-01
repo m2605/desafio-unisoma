@@ -1,5 +1,5 @@
 """
-Enturme - Ensalamento automático de turmas (interface gráfica).
+Enturme ABC - Ensalamento automático de turmas (interface gráfica).
 
 Fluxo: 1) selecionar a planilha  2) Rodar ensalamento  3) conferir resumo,
 inconsistências e abrir a planilha/relatório gerados.
@@ -29,7 +29,7 @@ VERDE = "#7DB945"
 FUNDO = "#F4F7FB"
 CINZA = "#595959"
 
-AJUDA = """COMO USAR — ENTURME
+AJUDA = """COMO USAR — ENTURME ABC
 
 1. Clique em "Procurar..." e escolha a planilha Excel (.xlsx) do semestre.
    Ela deve ter as abas:
@@ -70,7 +70,7 @@ def abrir_arquivo(caminho: str) -> None:
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Enturme · Ensalamento automático de turmas")
+        self.title("Enturme ABC · Ensalamento automático de turmas")
         self.geometry("1040x720")
         self.minsize(860, 620)
         self.configure(bg=FUNDO)
@@ -425,7 +425,7 @@ class App(tk.Tk):
 
 
 def _sem_janela(planilha: str) -> int:
-    """Modo lote: Ensalamento.exe --sem-janela planilha.xlsx (grava log ao lado)."""
+    """Modo lote: Enturme.exe --sem-janela planilha.xlsx (grava log ao lado)."""
     log = os.path.splitext(planilha)[0] + "_log.txt"
     with open(log, "w", encoding="utf-8") as fh:
         try:
