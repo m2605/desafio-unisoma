@@ -8,8 +8,6 @@ Mário Vinícius Souza de Carvalho
                              depois "Confirmar processamento da planilha de alunos".
                              Se aparecer "O Windows protegeu o computador":
                              Mais informações -> Executar assim mesmo.
-   Interface_classica_opcional\Ensalamento.exe
-                             mesma otimização, com tabelas detalhadas.
 
 02_Manual
    Manual_do_Usuario_Enturme.pdf
@@ -22,12 +20,13 @@ Mário Vinícius Souza de Carvalho
 
 04_Codigo_Python
    codigo_fonte_equipe14.zip  código completo (ETL + modelagem MILP + interface).
-     - solucao_monolitica/ensalamento_mono/modelo_monolitico.py  -> modelo de otimização
+     - solucao_monolitica/ensalamento_mono/modelo_monolitico.py -> modelo de otimização
        (PuLP + solver HiGHS)
-     - solucao_monolitica/ensalamento_mono/etl.py               -> leitura e inconsistências
-     - solucao_monolitica/app_enturme.py                        -> interface Enturme
-     - solucao_decomposicao/ -> formulação alternativa (decomposição), para comparação
+     - solucao_monolitica/ensalamento_mono/etl.py              -> leitura e inconsistências
+     - solucao_monolitica/ensalamento_mono/relatorio.py        -> relatório PDF
+     - solucao_monolitica/app_enturme.py                       -> interface Enturme
+     - solucao_monolitica/scripts/build_enturme.ps1            -> gera o Enturme.exe
+     - README.md                                               -> como rodar e gerar o .exe
 
 05_Apresentacao
-   Apresentacao_Enturme.pdf ........ apresentação (6 slides)
-   versao_completa_opcional\ ......... versão com 9 slides
+   Apresentacao_Enturme.pdf
