@@ -1,5 +1,5 @@
 """
-Ensalamento ABC Aprendiz - interface gráfica.
+Enturme - Ensalamento automático de turmas (interface gráfica).
 
 Fluxo: 1) selecionar a planilha  2) Rodar ensalamento  3) conferir resumo,
 inconsistências e abrir a planilha/relatório gerados.
@@ -14,18 +14,22 @@ import traceback
 import tkinter as tk
 from tkinter import filedialog, font as tkfont, messagebox, ttk
 
+from PIL import Image, ImageDraw, ImageFont, ImageTk
+
 from ensalamento_mono import __version__
 from ensalamento_mono.etl import ALERTA, CORRIGIDO, ERRO, ORDEM_TURNOS
 from ensalamento_mono.pipeline import executar
 from ensalamento_mono.saida import PlanilhaAbertaError
 
-AZUL = "#1F4E79"
-AZUL_MEDIO = "#2E75B6"
-VERDE = "#70AD47"
+AZUL = "#2A4598"
+NAVY_ESCURO = "#1E3270"
+AZUL_MEDIO = "#0D6EAC"
+BANDA = "#A7DACE"
+VERDE = "#7DB945"
 FUNDO = "#F4F7FB"
 CINZA = "#595959"
 
-AJUDA = """COMO USAR
+AJUDA = """COMO USAR — ENTURME
 
 1. Clique em "Procurar..." e escolha a planilha Excel (.xlsx) do semestre.
    Ela deve ter as abas:
@@ -66,16 +70,17 @@ def abrir_arquivo(caminho: str) -> None:
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Ensalamento ABC Aprendiz")
-        self.geometry("1040x700")
-        self.minsize(860, 600)
+        self.title("Enturme · Ensalamento automático de turmas")
+        self.geometry("1040x720")
+        self.minsize(860, 620)
         self.configure(bg=FUNDO)
         try:
-            self.iconbitmap(caminho_recurso("assets/icone.ico"))
+            self.iconbitmap(caminho_recurso("assets/enturme.ico"))
         except Exception:
             pass
         self.fila: queue.Queue = queue.Queue()
         self.resultado = None
+        self._logo_img = None
         self.caminho = tk.StringVar()
         self.status = tk.StringVar(value="Selecione a planilha de matriculados para começar.")
         self._estilos()
@@ -101,7 +106,7 @@ class App(tk.Tk):
         st.configure("KpiL.TLabel", background="white", foreground=CINZA, font=("Segoe UI", 9))
         st.configure("Rodar.TButton", font=("Segoe UI Semibold", 12), padding=(18, 10),
                      background=VERDE, foreground="white")
-        st.map("Rodar.TButton", background=[("disabled", "#BFBFBF"), ("active", "#5E9439")])
+        st.map("Rodar.TButton", background=[("disabled", "#BFBFBF"), ("active", "#6CA637")])
         st.configure("TButton", padding=(10, 6))
         altura_fonte = tkfont.Font(root=self, family="Segoe UI", size=9).metrics("linespace")
         st.configure("Treeview", rowheight=max(32, int(altura_fonte * 1.85)),
@@ -112,14 +117,42 @@ class App(tk.Tk):
         st.configure("TNotebook.Tab", padding=(14, 6), font=("Segoe UI", 10))
         st.configure("green.Horizontal.TProgressbar", background=VERDE)
 
+    def _criar_logo_enturme(self) -> ImageTk.PhotoImage | None:
+        try:
+            s = max(1.0, self.winfo_fpixels("1i") / 96.0)
+            f = ImageFont.truetype(caminho_recurso("assets/fonts/Poppins-Bold.ttf"), round(28 * s))
+            ic = Image.open(caminho_recurso("assets/abc_icone.png")).convert("RGBA")
+            h_ic = round(32 * s)
+            ic = ic.resize((round(ic.width * h_ic / ic.height), h_ic), Image.LANCZOS)
+            larg_txt = int(f.getlength("Enturme"))
+            gap = round(10 * s)
+            H = round(44 * s)
+            W = larg_txt + gap + ic.width + round(4 * s)
+            img = Image.new("RGBA", (W, H), (255, 255, 255, 255))
+            d = ImageDraw.Draw(img)
+            d.text((0, H // 2), "Enturme", font=f, fill=(42, 69, 152, 255), anchor="lm")
+            img.alpha_composite(ic, (larg_txt + gap, (H - h_ic) // 2 - round(1 * s)))
+            return ImageTk.PhotoImage(img)
+        except Exception:
+            return None
+
     def _montar(self):
-        topo = tk.Frame(self, bg=AZUL, height=70)
+        topo = tk.Frame(self, bg="white")
         topo.pack(fill="x")
-        tk.Label(topo, text="Ensalamento ABC Aprendiz", bg=AZUL, fg="white",
-                 font=("Segoe UI Semibold", 18)).pack(side="left", padx=20, pady=(12, 12))
-        tk.Label(topo, text="Distribuição otimizada de alunos em turmas", bg=AZUL, fg="#BDD7EE",
-                 font=("Segoe UI", 10)).pack(side="left", pady=(20, 12))
-        ttk.Button(topo, text="❔ Como usar", command=self._ajuda).pack(side="right", padx=16)
+        cab = tk.Frame(topo, bg="white")
+        cab.pack(fill="x", padx=20, pady=(8, 8))
+        self._logo_img = self._criar_logo_enturme()
+        if self._logo_img is not None:
+            tk.Label(cab, image=self._logo_img, bg="white", bd=0).pack(side="left")
+        else:
+            tk.Label(cab, text="Enturme", bg="white", fg=AZUL,
+                     font=("Segoe UI", 20, "bold")).pack(side="left")
+        ttk.Button(cab, text="❔ Como usar", command=self._ajuda).pack(side="right")
+
+        faixa = tk.Frame(topo, bg=BANDA, height=30)
+        faixa.pack(fill="x")
+        tk.Label(faixa, text="ENSALAMENTO AUTOMÁTICO DE TURMAS", bg=BANDA, fg=NAVY_ESCURO,
+                 font=("Segoe UI Semibold", 9)).pack(pady=(5, 5))
 
         corpo = ttk.Frame(self, padding=(16, 12))
         corpo.pack(fill="both", expand=True)
