@@ -62,11 +62,11 @@ def main():
     titulo(shape(sl[6], 255), "Como ", "resolvemos")
     remover(shape(sl[6], 258))
     remover(shape(sl[6], 259))
-    imagem_em_caixa(sl[6], shape(sl[6], 257), os.path.join(AQUI, "img", "enturme_4_resultado.png"))
-    escrever(shape(sl[6], 262), "Enturme")
+    imagem_em_caixa(sl[6], shape(sl[6], 257), os.path.join(AQUI, "img", "app_3_turmas.png"))
+    escrever(shape(sl[6], 262), "Enturme ABC")
     escrever(shape(sl[6], 266), "Modelo de otimização (MILP + HiGHS): ninguém sem sala, turmas "
              "iguais e gênero equilibrado")
-    escrever(shape(sl[6], 270), "Arrasta a planilha e confirma: em ~1 s as turmas estão no Excel, "
+    escrever(shape(sl[6], 270), "Escolhe a planilha e clica em Rodar ensalamento: em ~1 s as turmas estão no Excel, "
              "com relatório PDF")
     escrever(shape(sl[6], 274), "4 de 4 instâncias aprovadas no validador oficial, com solução "
              "ótima provada")

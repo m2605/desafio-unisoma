@@ -224,7 +224,7 @@ def main():
              "inconsistências de uma vez e gravar o resultado no mesmo Excel")
 
     # 5 – solução
-    escrever(shape(sl[4], 203), "O Enturme lê a planilha de matriculados e, com um modelo "
+    escrever(shape(sl[4], 203), "O Enturme ABC lê a planilha de matriculados e, com um modelo "
              "matemático de otimização, monta em segundos as turmas mais equilibradas possíveis "
              "— já gravadas no Excel da ONG.")
     escrever(shape(sl[4], 207), "Ótimo, não “no olho”")
@@ -233,9 +233,9 @@ def main():
     escrever(shape(sl[4], 212), "Pega erro antes do problema")
     escrever(shape(sl[4], 213), "Corrige “manha”, “feminino”…; aponta sexo/turno inválidos, nomes "
              "duplicados e falta de vagas — tudo numa única execução.")
-    escrever(shape(sl[4], 217), "Arrastar, soltar, pronto")
-    escrever(shape(sl[4], 218), "Interface visual feita para a equipe da ONG + relatório PDF com "
-             "gráficos para a coordenação.")
+    escrever(shape(sl[4], 217), "Escolher, rodar, pronto")
+    escrever(shape(sl[4], 218), "Interface simples para a equipe da ONG: turmas, inconsistências e "
+             "detalhes da otimização na tela + relatório PDF para a coordenação.")
 
     # 6 – modelagem (modelo monolítico)
     escrever(shape(sl[5], 232), "min Z = W1·Σ z_i + W2·Σ_t (D_max − D_min) + W3·v — "
@@ -248,16 +248,16 @@ def main():
              "matriculados.")
     escrever(shape(sl[5], 247), ["Linguagem: Python 3.12.9", "Biblioteca de otimização: PuLP",
                                  "Solver: HiGHS (MILP branch-and-cut) · CBC reserva",
-                                 "Interface: Enturme (Tkinter + Pillow) · .exe (PyInstaller)",
+                                 "Interface: Enturme ABC (Tkinter) · .exe (PyInstaller)",
                                  "Relatório: ReportLab + Matplotlib"])
 
     # 7 – aplicativo
     remover(shape(sl[6], 258))
     remover(shape(sl[6], 259))
-    imagem_em_caixa(sl[6], shape(sl[6], 257), os.path.join(AQUI, "img", "enturme_4_resultado.png"))
-    escrever(shape(sl[6], 266), "Abrir o Enturme e arrastar (ou buscar) a planilha de matriculados")
-    escrever(shape(sl[6], 270), "Confirmar o processamento — turmas prontas em segundos")
-    escrever(shape(sl[6], 274), "Ver % alocados e gênero por turno; baixar planilha e relatório PDF")
+    imagem_em_caixa(sl[6], shape(sl[6], 257), os.path.join(AQUI, "img", "app_3_turmas.png"))
+    escrever(shape(sl[6], 266), "Abrir o Enturme ABC e clicar em Procurar... para escolher a planilha")
+    escrever(shape(sl[6], 270), "Clicar em Rodar ensalamento — turmas prontas em segundos")
+    escrever(shape(sl[6], 274), "Conferir turmas, gênero e inconsistências; abrir planilha e relatório PDF")
 
     # 8 – resultados
     escrever(shape(sl[7], 285), "4 / 4")
