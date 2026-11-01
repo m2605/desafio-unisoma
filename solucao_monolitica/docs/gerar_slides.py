@@ -158,6 +158,16 @@ def preencher_equipe(slide, membros):
             _link(ic, url)
             caixa.left = x0 + icone_lado + Cm(0.2)
             caixa.width = larg_txt + Cm(0.6)
+            # QR code do perfil, para quem assiste pelo telão apontar o celular
+            import segno
+            buf = io.BytesIO()
+            from urllib.parse import quote
+            segno.make(quote(url, safe=":/"), error="m").save(buf, kind="png", scale=12, border=1)
+            buf.seek(0)
+            lado = Cm(3.2)
+            qr = slide.shapes.add_picture(buf, card.left + (card.width - lado) // 2, Cm(19.75),
+                                          lado, lado)
+            _link(qr, url)
 
 
 def grafico_resultados():
