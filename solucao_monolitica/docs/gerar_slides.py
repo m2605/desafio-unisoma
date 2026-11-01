@@ -89,6 +89,77 @@ def resultados_reais():
     return dados
 
 
+CARTOES_EQUIPE = [(126, 127, 128, 129, 130, 131, 132, 133), (134, 135, 136, 137, 138, 139, 140, 141),
+                  (142, 143, 144, 145, 146, 147, 148, 149), (150, 151, 152, 153, 154, 155, 156, 157)]
+
+
+def _link(run_ou_shape, url):
+    """Adiciona hyperlink a um run de texto ou a uma imagem (acentos codificados na URL)."""
+    from urllib.parse import quote
+    url = quote(url, safe=":/?=&%#")
+    if hasattr(run_ou_shape, "hyperlink"):
+        run_ou_shape.hyperlink.address = url
+    else:
+        run_ou_shape.click_action.hyperlink.address = url
+
+
+def preencher_equipe(slide, membros):
+    """Cartões da equipe: nome, foto em círculo (se houver) e LinkedIn com ícone (se houver).
+    Membros: {"nome", "foto"?, "linkedin"?, "curso"?, "papel"?}; caminhos relativos a docs/."""
+    from pptx.dml.color import RGBColor
+    from pptx.util import Cm, Pt
+    for k, ids in enumerate(CARTOES_EQUIPE):
+        if k >= len(membros):
+            for i in ids:
+                remover(shape(slide, i))
+            continue
+        m = membros[k]
+        escrever(shape(slide, ids[4]), m["nome"])
+        if m.get("curso"):
+            escrever(shape(slide, ids[5]), m["curso"])
+        else:
+            remover(shape(slide, ids[5]))
+        if m.get("papel"):
+            escrever(shape(slide, ids[7]), m["papel"])
+        else:
+            remover(shape(slide, ids[6]))
+            remover(shape(slide, ids[7]))
+        foto = m.get("foto") and os.path.join(AQUI, m["foto"])
+        if foto and os.path.isfile(foto):
+            circ = shape(slide, ids[2])
+            remover(shape(slide, ids[3]))               # boneco do template
+            borda = Cm(0.12)
+            slide.shapes.add_picture(foto, circ.left + borda, circ.top + borda,
+                                     circ.width - 2 * borda, circ.height - 2 * borda)
+        if m.get("linkedin"):
+            url = m["linkedin"].rstrip("/")
+            if not url.startswith("http"):
+                url = "https://" + url
+            usuario = url.split("/in/")[-1]
+            card = shape(slide, ids[0])
+            icone_lado = Cm(0.55)
+            y = Cm(18.75)
+            caixa = slide.shapes.add_textbox(0, y - Cm(0.08), card.width - Cm(1.2), Cm(0.75))
+            tf = caixa.text_frame
+            tf.margin_left = tf.margin_right = tf.margin_top = tf.margin_bottom = 0
+            tf.word_wrap = False
+            run = tf.paragraphs[0].add_run()
+            run.text = usuario
+            run.font.size = Pt(10.5)
+            run.font.name = "Poppins"
+            run.font.color.rgb = RGBColor(0x0A, 0x66, 0xC2)
+            _link(run, url)
+            # centraliza ícone + texto dentro do cartão (largura aproximada do texto)
+            larg_txt = Cm(0.205 * len(usuario))
+            total = icone_lado + Cm(0.2) + larg_txt
+            x0 = card.left + (card.width - total) // 2
+            ic = slide.shapes.add_picture(os.path.join(os.path.dirname(AQUI), "assets", "linkedin.png"),
+                                          x0, y, icone_lado, icone_lado)
+            _link(ic, url)
+            caixa.left = x0 + icone_lado + Cm(0.2)
+            caixa.width = larg_txt + Cm(0.6)
+
+
 def grafico_resultados():
     dados = resultados_reais()  # instância: [(turma, meninos, meninas)]
     fig, axes = plt.subplots(1, 4, figsize=(18, 2.9), dpi=170, sharey=True)
@@ -135,27 +206,10 @@ def main():
 
     # 2 – capa
     escrever(shape(sl[1], 117), sol)
-    escrever(shape(sl[1], 118), f"Equipe {num}  ·  {nomes}")
+    escrever(shape(sl[1], 118), f"Equipe {num}")
 
-    # 3 – equipe (até 4 cartões; remove os que sobrarem)
-    cartoes = [(126, 127, 128, 129, 130, 131, 132, 133), (134, 135, 136, 137, 138, 139, 140, 141),
-               (142, 143, 144, 145, 146, 147, 148, 149), (150, 151, 152, 153, 154, 155, 156, 157)]
-    for k, ids in enumerate(cartoes):
-        if k < len(eq["membros"]):
-            m = eq["membros"][k]
-            escrever(shape(sl[2], ids[4]), m["nome"])
-            if m.get("curso"):
-                escrever(shape(sl[2], ids[5]), m["curso"])
-            else:
-                remover(shape(sl[2], ids[5]))
-            if m.get("papel"):
-                escrever(shape(sl[2], ids[7]), m["papel"])
-            else:
-                remover(shape(sl[2], ids[6]))
-                remover(shape(sl[2], ids[7]))
-        else:
-            for i in ids:
-                remover(shape(sl[2], i))
+    # 3 – equipe (fotos, LinkedIn; remove cartões que sobrarem)
+    preencher_equipe(sl[2], eq["membros"])
 
     # 4 – problema
     escrever(shape(sl[3], 171), "Todo semestre a equipe distribui centenas de jovens em turmas da "
@@ -227,8 +281,8 @@ def main():
              "equilibradas para os jovens; decisões transparentes com relatório.")
 
     # 10 – encerramento
-    escrever(shape(sl[9], 333), f"Equipe {num}  ·  {sol}")
-    escrever(shape(sl[9], 334), nomes)
+    remover(shape(sl[9], 333))   # encerramento: só "Obrigado"
+    remover(shape(sl[9], 334))
 
     # o template traz slides ocultos (problema, modelagem, resultados): exibe todos
     for s in sl:

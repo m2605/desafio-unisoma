@@ -2,9 +2,13 @@
   "numero": "14",
   "solucao": "Enturme",
   "membros": [
-    {"nome": "Willian Massaki Otani"},
-    {"nome": "Ester Santos da Silva"},
-    {"nome": "Mário Vinícius Souza de Carvalho"},
-    {"nome": "Maria Magdalena Kcala Alvaro"}
+    {"nome": "Willian Massaki Otani", "foto": "fotos/willian.png",
+     "linkedin": "https://www.linkedin.com/in/willian-massaki-otani-67538427b/"},
+    {"nome": "Ester Santos da Silva", "foto": "fotos/ester.png",
+     "linkedin": "https://www.linkedin.com/in/ester-silvaa/"},
+    {"nome": "Maria Magdalena Kcala Alvaro", "foto": "fotos/maria.png",
+     "linkedin": "https://www.linkedin.com/in/maria-magdalena-kcala-álvaro-aa7810309"},
+    {"nome": "Mário Vinícius Souza de Carvalho", "foto": "fotos/mario.png",
+     "linkedin": "https://www.linkedin.com/in/mario-carvalho1528/"}
   ]
 }
